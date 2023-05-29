@@ -1,0 +1,26 @@
+#create NFS Storage on NFS Server
+``````````````````````````````````
+yum install nfs-utils
+systemctl start nfs-server rpcbind
+systemctl enable nfs-server rpcbind
+mkdir /mnt/sharedoc
+chmod 777 /mnt/sharedoc/
+vim /etc/exports
+	#add line in exports file --> 
+	/mnt/sharedoc 192.168.0.0/16(rw,sync,no_root_squash)
+
+exportfs -r
+firewall-cmd --permanent --add-service mountd
+firewall-cmd --permanent --add-service rpc-bind
+firewall-cmd --permanent --add-service nfs
+firewall-cmd --reload
+ 
+
+#on NFS Client 
+```````````````
+yum install nfs-utils
+showmount -e 192.168.76.xxx  #it will show mount location, change xxx with your master's ip address
+mkdir /mnt/nfsdrive
+mount 192.168.76.xxx:/mnt/sharedoc /mnt/nfsdrive/
+mount | grep nfs
+df -h
