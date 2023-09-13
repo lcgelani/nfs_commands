@@ -10,9 +10,9 @@ vim /etc/exports
 	/mnt/sharedoc 192.168.0.0/16(rw,sync,no_root_squash)
 
 exportfs -r
-firewall-cmd --permanent --add-service mountd
-firewall-cmd --permanent --add-service rpc-bind
-firewall-cmd --permanent --add-service nfs
+firewall-cmd --permanent --add-service=mountd
+firewall-cmd --permanent --add-service=rpc-bind
+firewall-cmd --permanent --add-service=nfs
 firewall-cmd --reload
  
 
