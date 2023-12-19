@@ -24,3 +24,23 @@ mkdir /mnt/nfsdrive
 mount 192.168.76.xxx:/mnt/sharedoc /mnt/nfsdrive/
 mount | grep nfs
 df -h
+
+
+ubuntu
+````````````````````````````````
+apt -y install nfs-kernel-server
+systemctl start nfs-kernel-server.service
+mkdir /mnt/docshare
+chmod 777 /mnt/docshare
+vim /etc/exports
+
+	/mnt/docshare 192.168.220.0/24(rw,sync,no_subtree_check,no_root_squash)
+exportfs -r
+
+#on NFS Client 
+```````````````
+apt install -y nfs-common
+showmount -e 192.168.76.xxx  #it will show mount location, change xxx with your
+mkdir /mnt/sharedoc
+mount 192.168.*.*:/mnt/docshare /mnt/share/
+
